@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Staff>
+
+<section id="staff" class="team_section layout_padding">
+    <div class="container-fluid">
+        <div class="heading_container heading_center">
+            <h2 class="">
+                Ekibimiz
+            </h2>
+        </div>
+
+        <div class="team_container">
+            <div class="row">
+                @foreach (var staff in Model)
+                {
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="box ">
+                            <div class="img-box">
+                                <img src="@Url.Content(staff.Image)" class="img1" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    @staff.Name
+                                </h5>
+                                <p>
+                                    @staff.Position
+                                </p>
+                            </div>
+                            <div class="social_box">
+                                <a href="@staff.LinkedIn">
+                                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                </a>
+                                <a href="@staff.Instagram">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                </a>
+                                <a href="@staff.YouTube">
+                                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

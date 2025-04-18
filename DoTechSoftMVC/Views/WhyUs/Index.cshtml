@@ -1,0 +1,175 @@
+﻿@model IEnumerable<WhyUs>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_AdminLayout/_AdminLayout.cshtml";
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <td>Numara</td>
+            <td>Resim</td>
+            <td>Başlık</td>
+            <td>Açıklama </td>
+            <td>Detay</td>
+            <td>Sil</td>
+        </tr>
+    </thead>
+    <tbody>
+        <div class="mb-3 col-lg-3">
+            <input type="text" id="search-title1" class="form-control input-rounded shadow-sm" placeholder="Başlık'a' göre ara...">
+        </div>
+        @if (Model != null)
+        {
+            foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.WhyUsId</td>
+                    <td>
+                        <img src="@Url.Content(i.Icon)" alt="resim" width="200" height="150" class="img-thumbnail" />
+                    </td>
+                    <td>@i.Title</td>
+                    <td>@i.Desc</td>
+                    
+                    <td>
+                        <a href="#" class="btn btn-success open-detail-modal"
+                           data-id="@i.WhyUsId"
+                           data-title="@i.Title"
+                           data-desc="@i.Desc"
+                           data-icon="@Url.Content(i.Icon)">
+                            Detay
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);"
+                           class="btn btn-danger delete-btn"
+                           data-id="@i.WhyUsId">
+                            Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
+
+<a href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+    Yeni Ekle
+</a>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-4">
+            <h2>
+                Personel Detay
+            </h2>
+            <hr />
+            <form asp-action="Add" asp-controller="WhyUs" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="WhyUSId" id="whyUsId" value="0" />
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="imageupload" class="form-label">görsel seç</label>
+                        <input type="file" class="form-control" id="imageupload" name="ImageFile" accept="image/*">
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <label class="form-label d-block">önizleme</label>
+                        <img id="imagepreview" src="" alt="resim önizleme" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Sol Kolon -->
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <label for="title">Başlık</label>
+                            <input type="text" class="form-control" id="title" name="Title" placeholder="Başlık giriniz">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="desc">Açıklama </label>
+                            <input type="text" class="form-control" id="desc" name="Desc" placeholder="Açıklama giriniz">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.querySelector(".bd-example-modal-lg");
+
+        document.querySelectorAll(".open-detail-modal").forEach(btn => {
+            btn.addEventListener("click", function () {
+                // inputlara değerleri aktar
+                document.getElementById("whyUsId").value = btn.dataset.id || 0;
+
+                document.getElementById("imagepreview").src = btn.dataset.icon || "";
+                document.getElementById("title").value = btn.dataset.title || "";
+                document.getElementById("desc").value = btn.dataset.desc || "";
+                // modalı aç
+                $(modal).modal("show");
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const id = btn.dataset.id;
+
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: "Bu kayıt silinecek!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Evet, sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kullanıcı onayladı, yönlendir
+                        window.location.href = `/WhyUs/Delete/${id}`;
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-title1");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(row => {
+                const title1 = row.querySelector("td:nth-child(3)").textContent.toLowerCase(); // 3. sütun = Başlık
+                row.style.display = title1.includes(filter) ? "" : "none";
+            });
+        });
+    });
+</script>
+<script>
+    document.querySelector("form").addEventListener("submit", function () {
+        const checkbox = document.getElementById("isActive");
+        checkbox.value = checkbox.checked ? "true" : "false";
+    });
+</script>
+
+
+
+
+
+
+
+
+

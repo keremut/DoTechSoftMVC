@@ -1,0 +1,35 @@
+﻿@model About
+
+
+<section id="about" class="about_section layout_padding">
+    <div class="container  ">
+        <div class="heading_container heading_center">
+            <h2>
+                Biz <span>Kimiz</span>
+            </h2>
+            <p>
+                @Model.Desc1
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="img-box">
+                    <img src="@Url.Content(Model.Image)" alt="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="detail-box">
+                    <h3>
+                        @Model.Title2
+                    </h3>
+                    <p>
+                        @Model.Desc2
+                    </p>
+                    <a href="#">
+                        Daha Fazla
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

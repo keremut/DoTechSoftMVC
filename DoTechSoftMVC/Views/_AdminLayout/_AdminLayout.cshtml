@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DoTech - İnternet Teknolojileri</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="~/adminweb/images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="~/adminweb/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    @await Html.PartialAsync("~/Views/Partials/_Preloader.cshtml")
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        @await Html.PartialAsync("~/Views/Partials/_Navheader.cshtml")
+        @await Html.PartialAsync("~/Views/Partials/_Header.cshtml")
+        @await Html.PartialAsync("~/Views/Partials/_Sidebar.cshtml")
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        @await Html.PartialAsync("~/Views/Partials/_Footer.cshtml")
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+    @await Html.PartialAsync("~/Views/Partials/_Scripts.cshtml")
+
+</body>
+
+</html>

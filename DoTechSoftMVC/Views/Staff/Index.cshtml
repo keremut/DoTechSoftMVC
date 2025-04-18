@@ -1,0 +1,214 @@
+﻿@model IEnumerable<Staff>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_AdminLayout/_AdminLayout.cshtml";
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <td>Sicil No</td>
+            <td>Resim</td>
+            <td>İsim</td>
+            <td>Pozisyon </td>
+            <td>Durum </td>
+            <td>Detay</td>
+            <td>Sil</td>
+        </tr>
+    </thead>
+    <tbody>
+        <div class="mb-3 col-lg-3">
+            <input type="text" id="search-title1" class="form-control input-rounded shadow-sm" placeholder="Başlık'a' göre ara...">
+        </div>
+        @if (Model != null)
+        {
+            foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.StaffId</td>
+                    <td>
+                        <img src="@Url.Content(i.Image)" alt="resim" width="200" height="150" class="img-thumbnail" />
+                    </td>
+                    <td>@i.Name</td>
+                    <td>@i.Position</td>
+                    <td>@if(i.IsActive == true)
+                        {
+                            <span class="label label-pill label-success">Aktif</span>
+                        }
+                        else
+                        {
+                            <span class="label label-pill label-danger">Pasif</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-success open-detail-modal"
+                           data-id="@i.StaffId"
+                           data-name="@i.Name"
+                           data-position="@i.Position"
+                           data-linkedin="@i.LinkedIn"
+                           data-instagram="@i.Instagram"
+                           data-youtube="@i.YouTube"
+                           data-is-active="@i.IsActive"
+                           data-image="@Url.Content(i.Image)">
+                            Detay
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);"
+                           class="btn btn-danger delete-btn"
+                           data-id="@i.StaffId">
+                            Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
+
+<a href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+    Yeni Ekle
+</a>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-4">
+            <h2>
+                Personel Detay
+            </h2>
+            <hr />
+            <form asp-action="Add" asp-controller="Staff" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="StaffId" id="staffId" value="0" />
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="imageupload" class="form-label">görsel seç</label>
+                        <input type="file" class="form-control" id="imageupload" name="ImageFile" accept="image/*">
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <label class="form-label d-block">önizleme</label>
+                        <img id="imagepreview" src="" alt="resim önizleme" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Sol Kolon -->
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="name">İsim</label>
+                            <input type="text" class="form-control" id="name" name="Name" placeholder="İsim giriniz">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="position">Açıklama </label>
+                            <input type="text" class="form-control" id="position" name="Position" placeholder="Pozisyon giriniz">
+                        </div>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="IsActive" value="true" id="isActive" checked>
+                            <label class="form-check-label" for="isActive">
+                                Aktif mi?
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="linkedin">Başlık 1</label>
+                            <input type="text" class="form-control" id="linkedin" name="LinkedIn" placeholder="LinkedIn giriniz">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="instagram">Açıklama </label>
+                            <input type="text" class="form-control" id="instagram" name="Instagram" placeholder="Instagram giriniz">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="youtube">Açıklama </label>
+                            <input type="text" class="form-control" id="youtube" name="YouTube" placeholder="YouTube giriniz">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-end mt-3">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.querySelector(".bd-example-modal-lg");
+
+        document.querySelectorAll(".open-detail-modal").forEach(btn => {
+            btn.addEventListener("click", function () {
+                // inputlara değerleri aktar
+                document.getElementById("staffId").value = btn.dataset.id || 0;
+
+                document.getElementById("imagepreview").src = btn.dataset.image || "";
+                document.getElementById("name").value = btn.dataset.name || "";
+                document.getElementById("position").value = btn.dataset.position || "";
+                document.getElementById("isActive").checked = btn.dataset.isActive === "true";
+                document.getElementById("instagram").value = btn.dataset.instagram || "";
+                document.getElementById("linkedin").value = btn.dataset.linkedin || "";
+                document.getElementById("youtube").value = btn.dataset.youtube || "";
+                // modalı aç
+                $(modal).modal("show");
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const id = btn.dataset.id;
+
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: "Bu kayıt silinecek!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Evet, sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kullanıcı onayladı, yönlendir
+                        window.location.href = `/Staff/Delete/${id}`;
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-title1");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(row => {
+                const title1 = row.querySelector("td:nth-child(3)").textContent.toLowerCase(); // 3. sütun = İsim
+                row.style.display = title1.includes(filter) ? "" : "none";
+            });
+        });
+    });
+</script>
+<script>
+    document.querySelector("form").addEventListener("submit", function () {
+        const checkbox = document.getElementById("isActive");
+        checkbox.value = checkbox.checked ? "true" : "false";
+    });
+</script>
+
+
+
+
+
+
+
+
+

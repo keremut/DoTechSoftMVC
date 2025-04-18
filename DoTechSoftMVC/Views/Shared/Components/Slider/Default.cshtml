@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Home>
+
+<section id="homeslider" class="slider_section ">
+    <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @{
+                var sliderList = Model.ToList();
+
+                foreach (var slider in sliderList)
+                {
+                    var isActive = sliderList.IndexOf(slider) == 0 ? "active" : "";
+
+                    <div class="carousel-item @isActive">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            @slider.Title
+                                        </h1>
+                                        <p>
+                                            @slider.Desc
+                                        </p>
+                                        <div class="btn-box">
+                                            <a href="" class="btn1">
+                                                Read More
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="img-box">
+                                        <img src="@Url.Content(slider.Image)" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            
+        </div>
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < sliderList.Count; i++)
+            {
+                var isActive = i == 0 ? "active" : "";
+                <li data-target="#customCarousel1" data-slide-to="@i" class="@isActive"></li>
+            })
+        </ol>
+    </div>
+
+</section>

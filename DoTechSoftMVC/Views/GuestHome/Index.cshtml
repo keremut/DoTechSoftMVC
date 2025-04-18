@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_GuestLayout/_GuestLayout.cshtml";
+}
+
+
+@section HeroContent {
+    @await Component.InvokeAsync("Slider")
+}
+
+<!-- service section -->
+@await Component.InvokeAsync("Service")
+<!-- end service section -->
+<!-- about section -->
+@await Component.InvokeAsync("About")
+
+<!-- end about section -->
+<!-- why section -->
+@await Component.InvokeAsync("WhyUs")
+
+<!-- end why section -->
+<!-- team section -->
+@await Component.InvokeAsync("Staff")
+<!-- end team section -->
+<!-- client section -->
+@await Html.PartialAsync("~/Views/Partials/_GuestClient.cshtml")
+
+<!-- end client section -->
+<!-- info section -->
+@await Html.PartialAsync("~/Views/Partials/_GuestInfo.cshtml")
+
+<!-- end info section -->
+
+
+

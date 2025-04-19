@@ -1,0 +1,68 @@
+﻿@model About
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+@await Html.PartialAsync("~/Views/Partials/_GuestHeadPartial.cshtml")
+
+<body class="sub_page">
+
+    <div class="hero_area">
+
+        <div class="hero_bg_box">
+            <div class="bg_img_box">
+                <img src="images/hero-bg.png" alt="">
+            </div>
+        </div>
+
+        <!-- header section strats -->
+        @await Html.PartialAsync("~/Views/Partials/_GuestHeader.cshtml")
+        <!-- end header section -->
+    </div>
+
+    <!-- about section -->
+
+    <section class="about_section layout_padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Görsel Sol -->
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="img-box shadow-sm rounded overflow-hidden">
+                        <img src="@Url.Content(Model.Image)" alt="Hakkımızda" class="img-fluid">
+                    </div>
+                </div>
+
+                <!-- Metin Sağ -->
+                <div class="col-md-6">
+                    <div class="detail-box">
+                        <h2 class="fw-bold mb-3">
+                            @Model.Title2
+                        </h2>
+                        <p class="mb-3 ">
+                            @Model.Desc1
+                        </p>
+                        <p>
+                            @Model.Desc2
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- end about section -->
+    <!-- info section -->
+    @await Html.PartialAsync("~/Views/Partials/_GuestInfo.cshtml")
+
+    <!-- end info section -->
+    @await Html.PartialAsync("~/Views/Partials/_GuestFooter.cshtml")
+    @await Html.PartialAsync("~/Views/Partials/_GuestScripts.cshtml")
+
+</body>
+
+</html>
+

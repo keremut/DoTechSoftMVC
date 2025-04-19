@@ -6,67 +6,11 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link rel="shortcut icon" href="/guesthome/images/favicon.png" type="">
-
-    <title> DoTech - İnternet Teknolojileri </title>
-
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="/guesthome/css/bootstrap.css" />
-
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-    <!--owl slider stylesheet -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-    <!-- font awesome style -->
-    <link href="/guesthome/css/font-awesome.min.css" rel="stylesheet" />
-
-    <!-- Custom styles for this template -->
-    <link href="/guesthome/css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="/guesthome/css/responsive.css" rel="stylesheet" />
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #00bbf0;
-            color: white;
-            padding: 12px 15px;
-            border-radius: 50%;
-            font-size: 20px;
-            display: block;
-            z-index: 999;
-            transition: all 0.3s;
-        }
-
-            .back-to-top:hover {
-                background-color: #008ec2;
-                color: #fff;
-            }
-    </style>
-    
-
-</head>
+@await Html.PartialAsync("~/Views/Partials/_GuestHeadPartial.cshtml")
 
 <body>
 
-    <div class="hero_area">
+    <div id="heroarea" class="hero_area">
 
         <div class="hero_bg_box">
             <div class="bg_img_box">
@@ -90,7 +34,7 @@
     <!-- jQery -->
     @await Html.PartialAsync("~/Views/Partials/_GuestScripts.cshtml")
     <!-- End Google Map -->
-    <a href="#homeslider" id="backToTop" class="back-to-top">
+    <a href="#heroarea" id="backToTop" class="back-to-top">
         <i class="fa fa-arrow-up"></i>
     </a>
 </body>

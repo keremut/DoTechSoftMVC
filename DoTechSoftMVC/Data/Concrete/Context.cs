@@ -15,5 +15,6 @@ namespace DoTechSoftMVC.Data.Concrete
         public DbSet<Home> Homes { get; set; } = null!;
         public DbSet<Staff> Staffs { get; set; } = null!;
         public DbSet<Subscribe> Subscribes { get; set; } = null!;
+        public DbSet<Contact> Contacts { get; set; } = null!;
     }
 }

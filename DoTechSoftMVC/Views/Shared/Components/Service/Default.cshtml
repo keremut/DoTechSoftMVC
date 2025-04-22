@@ -13,7 +13,7 @@
                 </p>
             </div>
             <div class="row">
-                @foreach ( var item in Model)
+                @foreach ( var item in Model.Take(3))
                 {
                     <div class="col-md-4 ">
                         <div class="box ">
@@ -27,7 +27,7 @@
                                 <p>
                                     @item.Desc
                                 </p>
-                                <a href="#">
+                                <a asp-controller="GuestService" asp-action="ServiceDetail" asp-route-id="@item.ServiceId">
                                     İncele
                                 </a>
                             </div>
@@ -36,7 +36,7 @@
                 }
             </div>
             <div class="btn-box">
-                <a href="">
+                <a asp-controller="GuestService" asp-action="Index">
                     Tümünü Gör
                 </a>
             </div>

@@ -53,6 +53,7 @@ namespace DoTechSoftMVC.Controllers
                     model.Title = entity.Title;
                     model.Desc = entity.Desc;
                     model.IsActive = entity.IsActive;
+                    model.LongDesc = entity.LongDesc;  
                     if (!string.IsNullOrEmpty(entity.Icon))
                         model.Icon = entity.Icon;
 

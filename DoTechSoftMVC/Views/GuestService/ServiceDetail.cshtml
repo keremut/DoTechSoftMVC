@@ -1,0 +1,163 @@
+﻿@model Service
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+@await Html.PartialAsync("~/Views/Partials/_GuestHeadPartial.cshtml")
+
+<body class="sub_page">
+
+    <div class="hero_area">
+
+        <div class="hero_bg_box">
+            <div class="bg_img_box">
+                <img src="images/hero-bg.png" alt="">
+            </div>
+        </div>
+
+        <!-- header section strats -->
+        @await Html.PartialAsync("~/Views/Partials/_GuestHeader.cshtml")
+        <!-- end header section -->
+    </div>
+
+    <section class="service_detail_section layout_padding">
+        <div class="container">
+            <!-- Başlık -->
+            <div class="heading_container heading_center mb-5">
+                <h2 class="fw-bold">
+                    @Model.Title
+                </h2>
+                <p class="text-muted">
+                    "İşletmenize özel çözümler sunuyoruz."
+                </p>
+            </div>
+
+            <!-- İçerik -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="detail-text">
+                        <p class="mb-4">@Model.LongDesc</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-check text-primary me-2"></i> Özelleştirilebilir yapı</li>
+                            <li><i class="fa fa-check text-primary me-2"></i> Yüksek performans</li>
+                            <li><i class="fa fa-check text-primary me-2"></i> Güçlü destek altyapısı</li>
+                        </ul>
+                        <a href="javascript:void(0)" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#contactModal">Detaylı Bilgi Al</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="img-box d-flex justify-content-center align-items-center">
+                        <img src="@Url.Content(Model.Icon)" alt="@Model.Title" class="img-fluid service-img" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    @await Html.PartialAsync("~/Views/Partials/_GuestInfo.cshtml")
+
+    <!-- end info section -->
+    @await Html.PartialAsync("~/Views/Partials/_GuestFooter.cshtml")
+    @await Html.PartialAsync("~/Views/Partials/_GuestScripts.cshtml")
+
+
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">İletişim Formu</h5>
+                </div>
+                <form id="contactForm" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" name="Name" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">E-posta</label>
+                            <input type="email" class="form-control" name="Email" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mesajınız</label>
+                            <textarea class="form-control" name="Message" rows="4" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('#contactForm');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+
+                fetch('/Contact/Add', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Teşekkürler!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'Tamam',
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+
+                        form.reset();
+
+                        const modalEl = document.getElementById('contactModal');
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        modal.hide();
+                    } else {
+                        Swal.fire({
+                            title: 'Hata!',
+                            text: 'Bir sorun oluştu, lütfen tekrar deneyin.',
+                            icon: 'error',
+                            confirmButtonText: 'Kapat'
+                        });
+                    }
+                })
+                .catch(() => {
+                    Swal.fire({
+                        title: 'Hata!',
+                        text: 'Sunucuya ulaşılamadı. Lütfen internet bağlantınızı kontrol edin.',
+                        icon: 'error',
+                        confirmButtonText: 'Tamam'
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+
+
+
+
+</html>
+
+
+<!-- Contact Modal -->
+
+
+
+

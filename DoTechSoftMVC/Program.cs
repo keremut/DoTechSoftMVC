@@ -19,6 +19,7 @@ builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IWhyUsRepository, WhyUsRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -6,6 +6,7 @@
         public string Icon { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Desc { get; set; } = string.Empty;
+        public string? LongDesc { get; set; }
         
     }
 }

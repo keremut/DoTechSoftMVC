@@ -1,0 +1,147 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_AdminLayout/_AdminLayout.cshtml";
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <td>Numara</td>
+            <td>İsim</td>
+            <td>Mesaj </td>
+            <td>Durum </td>
+            <td>Detay</td>
+            <td>Sil</td>
+        </tr>
+    </thead>
+    <tbody>
+        <div class="mb-3 col-lg-3">
+            <input type="text" id="search-title1" class="form-control input-rounded shadow-sm" placeholder="Başlık'a' göre ara...">
+        </div>
+        @if (Model != null)
+        {
+            foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.ContactId</td>
+                    <td>@i.Name</td>
+                    <td>@i.Message</td>
+                    <td>
+                        @if (i.IsRead == true)
+                        {
+                            <span class="label label-pill label-success">Okundu</span>
+                        }
+                        else
+                        {
+                            <span class="label label-pill label-danger">Okunmadı</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-success open-detail-modal"
+                           data-id="@i.ContactId"
+                           data-name="@i.Name"
+                           data-mail="@i.Email"
+                           data-msg="@i.Message"
+                           data-is-active="@i.IsRead">
+                            Oku
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);"
+                           class="btn btn-danger delete-btn"
+                           data-id="@i.ContactId">
+                            Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+
+
+
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content shadow">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="detailModalLabel">Mesaj Detayı</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Gönderen:</strong> <span id="modalSenderName"></span></p>
+                        <p><strong>Mail:</strong> <span id="modalSenderMail"></span></p>
+                        <hr />
+                        <p><strong>Mesaj:</strong></p>
+                        <p id="modalMessageContent" class="border rounded p-2 bg-light"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </tbody>
+
+</table>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const detailButtons = document.querySelectorAll(".open-detail-modal");
+
+        detailButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const name = button.dataset.name;
+                const message = button.dataset.msg;
+                const mail = button.dataset.mail;
+
+                document.getElementById("modalSenderName").textContent = name;
+                document.getElementById("modalSenderMail").textContent = mail;
+                document.getElementById("modalMessageContent").textContent = message;
+
+                const modal = new bootstrap.Modal(document.getElementById("detailModal"));
+                modal.show();
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const id = btn.dataset.id;
+
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: "Bu kayıt silinecek!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Evet, sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kullanıcı onayladı, yönlendir
+                        window.location.href = `/Contact/Delete/${id}`;
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-title1");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(row => {
+                const title1 = row.querySelector("td:nth-child(2)").textContent.toLowerCase(); // 2. sütun = İsim
+                row.style.display = title1.includes(filter) ? "" : "none";
+            });
+        });
+    });
+</script>
+

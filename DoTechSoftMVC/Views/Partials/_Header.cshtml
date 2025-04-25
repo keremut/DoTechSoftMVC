@@ -166,7 +166,14 @@
                                 <li>
                                     <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                 </li>
-                                <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                <li>
+                                    <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" style="background:none; border:none; padding:0; color:#007bff; cursor:pointer;">
+                                            <i class="icon-key"></i> <span>Çıkış Yap</span>
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>

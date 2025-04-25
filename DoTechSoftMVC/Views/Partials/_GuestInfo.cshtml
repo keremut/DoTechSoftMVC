@@ -7,13 +7,13 @@
                         Adres
                     </h4>
                     <div class="contact_link_box">
-                        <a href="">
+                        <a href="https://maps.app.goo.gl/MmqywBRvQjWVoYyv5" target="_blank">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <span>
                                 Konum
                             </span>
                         </a>
-                        <a href="">
+                        <a href="tel:+905414578948">
                             <i class="fa fa-phone" aria-hidden="true"></i>
                             <span>
                                 Arayın +90 5414578948
@@ -22,18 +22,12 @@
                         <a href="">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                             <span>
-                                keremeyrbkn@gmail.com
+                                info@dotechbthizmetleri.com
                             </span>
                         </a>
                     </div>
                 </div>
                 <div class="info_social">
-                    <a href="">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                    </a>
                     <a href="">
                         <i class="fa fa-linkedin" aria-hidden="true"></i>
                     </a>
@@ -80,8 +74,8 @@
                 <h4>
                     Haberdar Olmak İçin
                 </h4>
-                <form action="#">
-                    <input type="text" placeholder="Mail Adresinizi Girin" />
+                <form id="subForm" action="#">
+                    <input type="text" placeholder="Mail Adresinizi Girin" name="Email" required />
                     <button type="submit">
                         Abone Ol
                     </button>
@@ -90,3 +84,49 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('#subForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            fetch('/Subscribe/Add', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Teşekkürler!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'Tamam',
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+
+                    form.reset();
+                } else {
+                    Swal.fire({
+                        title: 'Hata!',
+                        text: data.message || 'Bir sorun oluştu, lütfen tekrar deneyin.',
+                        icon: 'error',
+                        confirmButtonText: 'Kapat'
+                    });
+                }
+            })
+            .catch(() => {
+                Swal.fire({
+                    title: 'Hata!',
+                    text: 'Sunucuya ulaşılamadı. Lütfen internet bağlantınızı kontrol edin.',
+                    icon: 'error',
+                    confirmButtonText: 'Tamam'
+                });
+            });
+        });
+    });
+</script>

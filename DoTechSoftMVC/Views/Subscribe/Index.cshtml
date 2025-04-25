@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Subscribe>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_AdminLayout/_AdminLayout.cshtml";
+}
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <td>Numara</td>
+            <td>Email</td>
+            <td>Detay</td>
+            <td>Sil</td>
+        </tr>
+    </thead>
+    <tbody>
+        <div class="mb-3 col-lg-3">
+            <input type="text" id="search-title1" class="form-control input-rounded shadow-sm" placeholder="Başlık'a' göre ara...">
+        </div>
+        @if (Model != null)
+        {
+            foreach (var i in Model)
+            {
+                <tr>
+                    <td>@i.SubscribeId</td>
+                    <td>@i.Email</td>
+
+                    <td>
+                        <a href="#" class="btn btn-success open-detail-modal"
+                           data-id="@i.SubscribeId"
+                           data-mail="@i.Email" disabled>
+                            Mail Gönder
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);"
+                           class="btn btn-danger delete-btn"
+                           data-id="@i.SubscribeId">
+                            Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const id = btn.dataset.id;
+
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: "Bu kayıt silinecek!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Evet, sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kullanıcı onayladı, yönlendir
+                        window.location.href = `/Subscribe/Delete/${id}`;
+                    }
+                });
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-title1");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(row => {
+                const title1 = row.querySelector("td:nth-child(2)").textContent.toLowerCase(); // 2. sütun = mail
+                row.style.display = title1.includes(filter) ? "" : "none";
+            });
+        });
+    });
+</script>
+
+
+

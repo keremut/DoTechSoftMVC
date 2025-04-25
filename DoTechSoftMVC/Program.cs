@@ -2,6 +2,7 @@ using DoTechSoftMVC.Data.Abstract;
 using DoTechSoftMVC.Data.Concrete;
 using DoTechSoftMVC.Data.Concrete.Entities;
 using DoTechSoftMVC.Data.Concrete.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,16 @@ builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IWhyUsRepository, WhyUsRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<ISubscribeRepository, SubscribeRepository>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
